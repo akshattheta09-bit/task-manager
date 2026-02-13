@@ -1,0 +1,46 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Dashboard | Task Manager{% endblock %}
+
+{% block content %}
+	<section class="card">
+		<div class="grid grid-2" style="align-items: center;">
+			<div>
+				<h1 class="section-title">Your tasks</h1>
+				<p class="section-subtitle">A clean view of what matters today.</p>
+			</div>
+			<div style="text-align: right;">
+				<a class="btn btn-primary" href="{% url 'create_task' %}">Create task</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="grid" style="margin-top: 22px;">
+		{% if tasks %}
+			{% for task in tasks %}
+				<article class="card">
+					<div class="grid" style="gap: 10px;">
+						<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+							<h2 class="section-title" style="font-size: 20px; margin: 0;">{{ task.title }}</h2>
+							<span class="badge" data-status="{{ task.status }}">{{ task.status|title }}</span>
+						</div>
+						{% if task.description %}
+							<p class="section-subtitle">{{ task.description }}</p>
+						{% else %}
+							<p class="section-subtitle">No description provided.</p>
+						{% endif %}
+						<div class="muted">Category: {{ task.category }}</div>
+					</div>
+				</article>
+			{% endfor %}
+		{% else %}
+			<article class="card" style="text-align: center;">
+				<h2 class="section-title" style="margin-bottom: 6px;">No tasks yet</h2>
+				<p class="section-subtitle">Start by creating your first task.</p>
+				<div style="margin-top: 16px;">
+					<a class="btn btn-primary" href="{% url 'create_task' %}">Create task</a>
+				</div>
+			</article>
+		{% endif %}
+	</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "tasks/base.html" %}
+
+{% block title %}Create Task | Task Manager{% endblock %}
+
+{% block content %}
+	<section class="card" style="max-width: 720px; margin: 0 auto;">
+		<h1 class="section-title">Create a task</h1>
+		<p class="section-subtitle">Capture what needs to get done and stay on track.</p>
+
+		<form method="post" style="margin-top: 22px;">
+			{% csrf_token %}
+			{{ form.non_field_errors }}
+			{{ form.as_p }}
+			<div class="form-actions">
+				<button class="btn btn-primary" type="submit">Save task</button>
+				<a class="btn btn-ghost" href="{% url 'dashboard' %}">Cancel</a>
+			</div>
+		</form>
+	</section>
+{% endblock %}
