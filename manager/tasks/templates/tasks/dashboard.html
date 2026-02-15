@@ -4,43 +4,32 @@
 
 {% block content %}
 	<section class="card">
-		<div class="grid grid-2" style="align-items: center;">
-			<div>
-				<h1 class="section-title">Your tasks</h1>
-				<p class="section-subtitle">A clean view of what matters today.</p>
-			</div>
-			<div style="text-align: right;">
-				<a class="btn btn-primary" href="{% url 'create_task' %}">Create task</a>
-			</div>
-		</div>
+		<h1>Your Tasks</h1>
+		<p class="small">Simple list of your tasks.</p>
+		<p><a class="btn" href="{% url 'create_task' %}">+ Create Task</a></p>
 	</section>
 
-	<section class="grid" style="margin-top: 22px;">
-		{% if tasks %}
-			{% for task in tasks %}
-				<article class="card">
-					<div class="grid" style="gap: 10px;">
-						<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-							<h2 class="section-title" style="font-size: 20px; margin: 0;">{{ task.title }}</h2>
-							<span class="badge" data-status="{{ task.status }}">{{ task.status|title }}</span>
-						</div>
-						{% if task.description %}
-							<p class="section-subtitle">{{ task.description }}</p>
-						{% else %}
-							<p class="section-subtitle">No description provided.</p>
-						{% endif %}
-						<div class="muted">Category: {{ task.category }}</div>
-					</div>
-				</article>
-			{% endfor %}
-		{% else %}
-			<article class="card" style="text-align: center;">
-				<h2 class="section-title" style="margin-bottom: 6px;">No tasks yet</h2>
-				<p class="section-subtitle">Start by creating your first task.</p>
-				<div style="margin-top: 16px;">
-					<a class="btn btn-primary" href="{% url 'create_task' %}">Create task</a>
-				</div>
-			</article>
-		{% endif %}
-	</section>
+	{% if tasks %}
+		{% for task in tasks %}
+			<section class="card">
+				<h2>{{ task.title }}</h2>
+				<p><strong>Status:</strong> {{ task.status|title }}</p>
+				<p><strong>Category:</strong> {{ task.category }}</p>
+				{% if task.description %}
+					<p>{{ task.description }}</p>
+				{% else %}
+					<p class="small">No description</p>
+				{% endif %}
+				<form method="post" action="{% url 'delete_task' task.id %}">
+					{% csrf_token %}
+					<button class="btn" type="submit">Remove Task</button>
+				</form>
+			</section>
+		{% endfor %}
+	{% else %}
+		<section class="card">
+			<p>No tasks yet.</p>
+			<p><a href="{% url 'create_task' %}">Create your first task</a></p>
+		</section>
+	{% endif %}
 {% endblock %}

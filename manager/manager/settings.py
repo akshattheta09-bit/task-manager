@@ -31,7 +31,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 # Application definition
 
 INSTALLED_APPS = [
-    "tasks",
+    'tasks',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -121,3 +121,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/dash/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
