@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required
 from .forms import TaskForm
 
 
-# @login_required
+@login_required
 def dashboard(request):
      tasks = Task.objects.filter(user=request.user)
      return render(request, "tasks/dashboard.html", {"tasks": tasks})
 
-# @login_required
+@login_required
 def create_task(request): 
      if request.method == "POST":
           form = TaskForm(request.POST) 
